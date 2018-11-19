@@ -25,7 +25,7 @@ scraperCtrl.scrap = async (ctx) => {
 
       };
       ctx.status = 200;
-      ctx.body = scrappedData;
+      ctx.body = outPut;
   }catch (e) {
       ctx.status = 500;
       ctx.body = {"Error":e};
