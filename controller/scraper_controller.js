@@ -21,7 +21,8 @@ scraperCtrl.scrap = async (ctx) => {
       const outPut = {
         name:query.name,
         mode:mode,
-        responseDataName : scrappedData
+        responseDataName : scrappedData,
+        status:"ok"
       };
       ctx.status = 200;
       ctx.body = outPut;
