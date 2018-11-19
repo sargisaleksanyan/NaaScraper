@@ -1,0 +1,4 @@
+The NAA site has data organized by company/investor, then date, then remit values
+Mode 1: get list of remits, follow steps in powerpoint to get list of remits for each company listed
+Mode 2: get data for specific remits: follow steps in powerpoint to get data (LoanSummary table) for specific company on a specific date
+If the steps in the powerpoint (page 4 of WebScraping_NAA_r3.pptx) are not clear, let me know and I can do a pseudo code version of your algorithm to make it more clear.
