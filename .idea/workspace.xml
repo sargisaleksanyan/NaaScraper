@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="888e484e-80f7-48cb-9e2e-c2be6d2d4f09" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/scraper/scraperOld.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller/scraper_controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/controller/scraper_controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scraper/Oldscraper.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/scraper/scraper.js" beforeDir="false" afterPath="$PROJECT_DIR$/scraper/scraper.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -29,7 +33,7 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="js" value="75" />
+          <entry key="js" value="79" />
           <entry key="json" value="5" />
           <entry key="requirment" value="1" />
         </counts>
@@ -37,58 +41,51 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JSON" value="5" />
-          <entry key="JavaScript" value="75" />
+          <entry key="JavaScript" value="79" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="js" value="10932" />
+          <entry key="js" value="11124" />
           <entry key="json" value="1" />
+          <entry key="txt" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="1" />
-          <entry key="JavaScript" value="10932" />
+          <entry key="JavaScript" value="11124" />
+          <entry key="PLAIN_TEXT" value="6" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scraper/scraper.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="840">
-              <caret line="280" column="6" lean-forward="true" selection-start-line="280" selection-start-column="6" selection-end-line="280" selection-end-column="6" />
+            <state relative-caret-position="254">
+              <caret line="212" column="5" selection-start-line="212" selection-start-column="5" selection-end-line="212" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/routes/scraper_router.js">
+        <entry file="file://$PROJECT_DIR$/scraper/scraperOld.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
+            <state relative-caret-position="252">
+              <caret line="21" column="37" lean-forward="true" selection-start-line="21" selection-end-line="22" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/server.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controller/scraper_controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="407">
-              <caret line="32" column="36" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
+            <state relative-caret-position="294">
+              <caret line="14" column="42" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -141,9 +138,9 @@
         <option value="$PROJECT_DIR$/util/time_converter.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/api/routes/scraper_router.js" />
-        <option value="$PROJECT_DIR$/scraper/scraper.js" />
         <option value="$PROJECT_DIR$/test/test.js" />
         <option value="$PROJECT_DIR$/controller/scraper_controller.js" />
+        <option value="$PROJECT_DIR$/scraper/scraper.js" />
       </list>
     </option>
   </component>
@@ -164,10 +161,10 @@
     </packageJsonPaths>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-318" />
-    <option name="y" value="147" />
-    <option name="width" value="1397" />
-    <option name="height" value="950" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -270,15 +267,38 @@
       <workItem from="1542092517157" duration="37675000" />
       <workItem from="1542227333600" duration="224000" />
       <workItem from="1542269223878" duration="20420000" />
-      <workItem from="1542441743375" duration="12180000" />
+      <workItem from="1542441743375" duration="16575000" />
     </task>
+    <task id="LOCAL-00001" summary="Update">
+      <created>1542633992432</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1542633992432</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Update">
+      <created>1542634200580</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1542634200580</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Update">
+      <created>1542634468029</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1542634468029</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="126863000" />
+    <option name="totallyTimeSpent" value="131258000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17911434" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -305,6 +325,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
@@ -400,17 +424,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/scraper/scraper.js">
+    <entry file="file://$PROJECT_DIR$/controller/scraper_controller.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="280" column="6" lean-forward="true" selection-start-line="280" selection-start-column="6" selection-end-line="280" selection-end-column="6" />
+        <state relative-caret-position="294">
+          <caret line="14" column="42" selection-start-line="14" selection-start-column="42" selection-end-line="14" selection-end-column="42" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller/scraper_controller.js">
+    <entry file="file://$PROJECT_DIR$/scraper/scraperOld.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="407">
-          <caret line="32" column="36" selection-start-line="32" selection-start-column="36" selection-end-line="32" selection-end-column="36" />
+        <state relative-caret-position="252">
+          <caret line="21" column="37" lean-forward="true" selection-start-line="21" selection-end-line="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scraper/scraper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="254">
+          <caret line="212" column="5" selection-start-line="212" selection-start-column="5" selection-end-line="212" selection-end-column="5" />
         </state>
       </provider>
     </entry>

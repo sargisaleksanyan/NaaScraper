@@ -7,11 +7,12 @@ scraperCtrl.scrap = async (ctx) => {
   try {
       const query = ctx.request.body;
 
-      const {Credentials} = query;
-      const {username} = Credentials;
-      const {pwd} = Credentials;
+      const {credentials} = query;
+      const {companies} = query;
+      const {username} = credentials;
+      const {pwd} = credentials;
       //const scrapedData = await scraper.scrap(username,pwd);
-      let scrappedData = await scraper.scrap(username,pwd);
+      let scrappedData = await scraper.scrap(username,pwd,companies);
       const {mode} = query;
 
       const outPut = {
@@ -21,10 +22,9 @@ scraperCtrl.scrap = async (ctx) => {
         status:"ok"
       };
       if(mode==1){
-
-          outPut['remits']  = await extractModeOne(scrappedData);
+         outPut['remits']  = await extractModeOne(scrappedData);
       }else{
-          outPut['loansummary'] = scrappedData;
+        outPut['loansummary'] = scrappedData;
       }
       ctx.status = 200;
       ctx.body = outPut;
@@ -43,17 +43,19 @@ const extractModeOne = (loanSummaryList) => {
     for (let i = 0; i < loanSummaryList.length; i++) {
         const loanSummary = loanSummaryList[i];
         const company = loanSummary['Company'];
-        const address = loanSummary['Property Address'];
-        const month = loanSummary['Month'];
-        if (company && address) {
-            if (!companies[company]) {
-                companies[company] = {};
+
+            const address = loanSummary['Property Address'];
+            const month = loanSummary['Month'];
+            if (company && address) {
+                if (!companies[company]) {
+                    companies[company] = {};
+                }
+                if (!companies[company][address]) {
+                    companies[company][address] = [];
+                }
+                companies[company][address].push(month);
             }
-            if (!companies[company][address]) {
-                companies[company][address] = [];
-            }
-            companies[company][address].push(month);
-        }
+
     }
     return companies;
 };

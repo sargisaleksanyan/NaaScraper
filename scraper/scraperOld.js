@@ -9,10 +9,10 @@ const remitsEnterUrl = "https://www.naa-amx.com/ip/index.php?mod=remits&fn=conso
 const indexPhpUrl = "https://www.naa-amx.com/ip/index.php";
 const scraper = {};
 
-scraper.scrap = async (userName, password,companies) => {
+scraper.scrap = async (userName, password) => {
     try {
         const cookies = await getLoginCookies(userName, password);
-        const companiesList = await getCompaniesList(cookies,companies);
+        const companiesList = await getCompaniesList(cookies);
         const companies = [];
         for (let i = 0; i < companiesList.length; i++) {
             companies.push(scrapComapnyDetails(companiesList[i], cookies));
@@ -189,7 +189,7 @@ const getCompanyRemitsList = async (company, cookies) => {
 /*
  gets companies from  html document
 */
-const getCompaniesList = async (cookies,companies) => {
+const getCompaniesList = async (cookies) => {
     const cookieString = extractCookiesFromObject(cookies);
     const headers = {
         "Referer": indexPhpUrl,
@@ -210,21 +210,15 @@ const getCompaniesList = async (cookies,companies) => {
         const companyElement = companyElementList[i];
         const value = $(companyElement).attr("value");
         let name = $(companyElement).text();
-     
-        if(companies){
-          if(companies.includes(name)){
+        //NSI - Prominent Holdings 75, LLC - ME (02)
+        const nameSubelements = name.split(" ");
+        const lastPart = nameSubelements[nameSubelements.length - 1];
+        if (lastPart.indexOf("(") > -1 && lastPart.indexOf(")") > -1) {
+            name = name.replace(lastPart, "").trim();
+        }
+        if (!companyNames.includes(name)) {
             companyList.push({name: name, value: value});
-          }
-        }else {
-            const nameSubelements = name.split(" ");
-            const lastPart = nameSubelements[nameSubelements.length - 1];
-            if (lastPart.indexOf("(") > -1 && lastPart.indexOf(")") > -1) {
-                name = name.replace(lastPart, "").trim();
-            }
-            if (!companyNames.includes(name)) {
-                companyList.push({name: name, value: value});
-                companyNames.push(name);
-            }
+            companyNames.push(name);
         }
     }
     return companyList;
