@@ -13,17 +13,19 @@ scraperCtrl.scrap = async (ctx) => {
       //const scrapedData = await scraper.scrap(username,pwd);
       let scrappedData = await scraper.scrap(username,pwd);
       const {mode} = query;
-      let responseDataName = "loansummary";
-      if(mode==1){
-        scrappedData = await extractModeOne(scrappedData);
-          responseDataName = "remits";
-      }
+
       const outPut = {
         name:query.name,
         mode:mode,
-        responseDataName : scrappedData,
+
         status:"ok"
       };
+      if(mode==1){
+
+          outPut['remits']  = await extractModeOne(scrappedData);
+      }else{
+          outPut['loansummary'] = scrappedData;
+      }
       ctx.status = 200;
       ctx.body = outPut;
   }catch (e) {
