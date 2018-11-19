@@ -5,24 +5,23 @@ const scraperCtrl = {};
 scraperCtrl.scrap = async (ctx) => {
 
   try {
-      const results = ctx.request.body;
-      const {Input} = results;
-      const {Credentials} = Input;
+      const query = ctx.request.body;
+
+      const {Credentials} = query;
       const {username} = Credentials;
       const {pwd} = Credentials;
       //const scrapedData = await scraper.scrap(username,pwd);
       let scrappedData = await scraper.scrap(username,pwd);
-      const {mode} = Input;
+      const {mode} = query;
       let responseDataName = "loansummary";
       if(mode==1){
         scrappedData = await extractModeOne(scrappedData);
           responseDataName = "remits";
       }
       const outPut = {
-        name:Input.name,
+        name:query.name,
         mode:mode,
         responseDataName : scrappedData
-
       };
       ctx.status = 200;
       ctx.body = outPut;
