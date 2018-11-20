@@ -12,6 +12,9 @@ const scraper = {};
 scraper.scrap = async (userName, password, givenCompanies) => {
     try {
         const cookies = await getLoginCookies(userName, password);
+        if(typeof cookies == "string"){
+            return cookies;
+        }
         if(typeof givenCompanies === 'undefined'){
             givenCompanies = null;
         }
@@ -28,6 +31,7 @@ scraper.scrap = async (userName, password, givenCompanies) => {
     } catch (e) {
         console.log(e);
     }
+    return "Error While Scraping";
 };
 
 
@@ -42,8 +46,6 @@ const parseLoanSummry = async (companiesDetails) => {
     const loanSummeryList = [];
 
     for (let i = 0; i < companiesDetails.length; i++) {
-
-
         const companyDetails = companiesDetails[i];
         for (let j = 0; j < companyDetails.length; j++) {
             const companyDetail = companyDetails[j];
@@ -303,7 +305,11 @@ const getLoginCookies = async (userName, password) => {
             }
         }
     }
-    return cookiesObject;
+    if(cookiesObject['amxportal']) {
+        return cookiesObject;
+    }else{
+        return "Login Problem"
+    }
 };
 
 // this function extracts cookies from response headers
