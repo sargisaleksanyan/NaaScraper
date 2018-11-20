@@ -8,7 +8,7 @@ scraperCtrl.scrap = async (ctx) => {
       const query = ctx.request.body;
 
       const {credentials} = query;
-      const {companies} = query;
+      let {companies} = query;
       const {username} = credentials;
       const {pwd} = credentials;
       //const scrapedData = await scraper.scrap(username,pwd);

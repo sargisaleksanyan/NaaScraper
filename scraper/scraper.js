@@ -9,29 +9,36 @@ const remitsEnterUrl = "https://www.naa-amx.com/ip/index.php?mod=remits&fn=conso
 const indexPhpUrl = "https://www.naa-amx.com/ip/index.php";
 const scraper = {};
 
-scraper.scrap = async (userName, password,companies) => {
+scraper.scrap = async (userName, password, givenCompanies) => {
     try {
         const cookies = await getLoginCookies(userName, password);
-        const companiesList = await getCompaniesList(cookies,companies);
+        if(typeof givenCompanies === 'undefined'){
+            givenCompanies = null;
+        }
+
+        const companiesList = await getCompaniesList(cookies, givenCompanies);
         const companies = [];
         for (let i = 0; i < companiesList.length; i++) {
             companies.push(scrapComapnyDetails(companiesList[i], cookies));
         }
         const companyDetails = await Promise.all(companies);
-        const parsedCompanies = await parseLoadSummry(companyDetails);
-       // const mode = await extractModeOne(parsedCompanies);
-        return  parsedCompanies;
+        const parsedCompanies = await parseLoanSummry(companyDetails);
+        // const mode = await extractModeOne(parsedCompanies);
+        return parsedCompanies;
     } catch (e) {
         console.log(e);
     }
 };
 
 
-
 /*
+
 this function parsed html and gets information we need from html code
+
 */
-const parseLoadSummry = async (companiesDetails) => {
+
+
+const parseLoanSummry = async (companiesDetails) => {
     const loanSummeryList = [];
 
     for (let i = 0; i < companiesDetails.length; i++) {
@@ -189,7 +196,7 @@ const getCompanyRemitsList = async (company, cookies) => {
 /*
  gets companies from  html document
 */
-const getCompaniesList = async (cookies,companies) => {
+const getCompaniesList = async (cookies, companies) => {
     const cookieString = extractCookiesFromObject(cookies);
     const headers = {
         "Referer": indexPhpUrl,
@@ -210,12 +217,12 @@ const getCompaniesList = async (cookies,companies) => {
         const companyElement = companyElementList[i];
         const value = $(companyElement).attr("value");
         let name = $(companyElement).text();
-     
-        if(companies){
-          if(companies.includes(name)){
-            companyList.push({name: name, value: value});
-          }
-        }else {
+
+        if (companies) {
+            if (companies.includes(name)) {
+                companyList.push({name: name, value: value});
+            }
+        } else {
             const nameSubelements = name.split(" ");
             const lastPart = nameSubelements[nameSubelements.length - 1];
             if (lastPart.indexOf("(") > -1 && lastPart.indexOf(")") > -1) {
