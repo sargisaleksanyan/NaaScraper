@@ -12,10 +12,10 @@ const scraper = {};
 scraper.scrap = async (userName, password, givenCompanies) => {
     try {
         const cookies = await getLoginCookies(userName, password);
-        if(typeof cookies == "string"){
+        if (typeof cookies == "string") {
             return cookies;
         }
-        if(typeof givenCompanies === 'undefined'){
+        if (typeof givenCompanies === 'undefined') {
             givenCompanies = null;
         }
 
@@ -50,25 +50,36 @@ const parseLoanSummry = async (companiesDetails) => {
         for (let j = 0; j < companyDetails.length; j++) {
             const companyDetail = companyDetails[j];
             const headers = await extractHeaders(companyDetail);
-            const tableData = await cheerio.load(companyDetail.html)(".tmain.sortable > tbody > tr ").find("td");
+            //const tableData = await cheerio.load(companyDetail.html)(".tmain.sortable > tbody > tr ").find("td");
+            const tableRows = await cheerio.load(companyDetail.html)(".tmain.sortable > tbody ").find("tr");
+            const date = await getDateFromHtml(companyDetail.html);
 
-            if (tableData && tableData.length > 0) {
-                const loanSummery = {};
-                loanSummery['Company'] = companyDetail.company;
-                const date = await getDateFromHtml(companyDetail.html);
-                loanSummery['Month'] = date;
-                for (let i = 0; i < headers.length; i++) {
+            if (tableRows && tableRows.length > 0) {
+                for (let n = 0; n < tableRows.length; n++) {
                     try {
-                        const tableHeader = tableData[i];
-                        const text = await cheerio.load(tableHeader).text();
-                        const tableHead = headers[i];
-                        loanSummery[headers[i].text] = text;
+                        const tableRow = tableRows[n];
+                        const tableData = await cheerio.load(tableRow)('td');
+
+                        const loanSummery = {};
+                        loanSummery['Company'] = companyDetail.company;
+
+                        loanSummery['Month'] = date;
+                        for (let i = 0; i < headers.length; i++) {
+                            try {
+                                const tableHeader = tableData[i];
+                                const text = await cheerio.load(tableHeader).text();
+                                const tableHead = headers[i];
+                                loanSummery[headers[i].text] = text;
+                            } catch (e) {
+                                console.log(companyDetail.name);
+                                console.log("Erorr ", e);
+                            }
+                        }
+                        loanSummeryList.push(loanSummery);
                     } catch (e) {
-                        console.log(companyDetail.name);
-                        console.log("Erorr ", e);
+                        console.log(e);
                     }
                 }
-                loanSummeryList.push(loanSummery);
             }
         }
     }
@@ -305,9 +316,9 @@ const getLoginCookies = async (userName, password) => {
             }
         }
     }
-    if(cookiesObject['amxportal']) {
+    if (cookiesObject['amxportal']) {
         return cookiesObject;
-    }else{
+    } else {
         return "Login Problem"
     }
 };
