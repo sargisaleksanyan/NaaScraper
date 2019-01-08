@@ -8,12 +8,14 @@ const loginUrl = "https://www.naa-amx.com/ip/index.php?mod=login";
 const remitsEnterUrl = "https://www.naa-amx.com/ip/index.php?mod=remits&fn=consolidated";
 const indexPhpUrl = "https://www.naa-amx.com/ip/index.php";
 const scraper = {};
+const Login_Problem = "Invaid Username or Password";
+const fail = "Failed";
 
 scraper.scrap = async (userName, password, givenCompanies) => {
     try {
         const cookies = await getLoginCookies(userName, password);
-        if (typeof cookies == "string") {
-            return cookies;
+        if (cookies == Login_Problem) {
+            return {status:fail,message:Login_Problem};
         }
         if (typeof givenCompanies === 'undefined') {
             givenCompanies = null;
@@ -27,11 +29,14 @@ scraper.scrap = async (userName, password, givenCompanies) => {
         const companyDetails = await Promise.all(companies);
         const parsedCompanies = await parseLoanSummry(companyDetails);
         // const mode = await extractModeOne(parsedCompanies);
-        return parsedCompanies;
+        if(companies.length ==0 && typeof givenCompanies !== 'undefined'){
+            return {status:fail,message:"Did not find any company with such name/names"};
+        }
+        return {status:"ok",data:parsedCompanies};
     } catch (e) {
         console.log(e);
     }
-    return "Error While Scraping";
+    return {status:fail,message:"Something went wrong"};;
 };
 
 
@@ -215,6 +220,7 @@ const getCompaniesList = async (cookies, companies) => {
         "Referer": indexPhpUrl,
         "Cookie": cookieString,
     };
+
     const response = await axios({
         method: 'GET',
         url: remitsEnterUrl,
@@ -319,7 +325,7 @@ const getLoginCookies = async (userName, password) => {
     if (cookiesObject['amxportal']) {
         return cookiesObject;
     } else {
-        return "Login Problem"
+        return Login_Problem;
     }
 };
 

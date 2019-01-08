@@ -1,6 +1,8 @@
 const scraper = require('../scraper/scraper');
 
 const scraperCtrl = {};
+const invalidAddress = 'Did not find any company with given address';
+const invalidDate = 'Did not find any company with given date';
 
 scraperCtrl.scrap = async (ctx) => {
     let outPut = {};
@@ -16,20 +18,34 @@ scraperCtrl.scrap = async (ctx) => {
         outPut = {
             name: query.name,
             mode: mode,
-            status: "ok"
         };
         if (!companies && asset) {
             companies = [];
             companies.push(asset.company);
         }
         scrappedData = await scraper.scrap(username, pwd, companies);
-
-        if (mode === 1) {
-            outPut['remits'] = await extractModeOne(scrappedData);
-        } else {
-            outPut['loansummary'] = extractAsset(scrappedData, asset);
-        }
         ctx.status = 200;
+        if(scrappedData && scrappedData.status=="ok") {
+            if (mode === 1) {
+                outPut['remits'] = await extractModeOne(scrappedData.data);
+            } else {
+                outPut['loansummary'] = extractAsset(scrappedData.data, asset);
+                if(typeof  outPut['loansummary'] ==="string" ){
+                    ctx.status = 400,
+                    scrappedData.status= "Failed";
+                    let value = outPut["loansummary"];
+                    delete outPut["loansummary"];
+                    outPut.message = value
+                }
+            }
+        }
+        else {
+            ctx.status = 400;
+            outPut.message = scrappedData.message
+        }
+        outPut.status = scrappedData.status;
+
+
         ctx.body = outPut;
     } catch (e) {
         console.log(e);
@@ -42,11 +58,21 @@ scraperCtrl.scrap = async (ctx) => {
 
 const extractAsset = (loanSummaryList, asset) => {
     let desiredLoanSummary = {};
+    let isThereProblemDate = false;
     for (let i = 0; i < loanSummaryList.length; i++) {
         const loanSummary = loanSummaryList[i];
-        if ((loanSummary['Property Address'] == asset['address']) && (loanSummary['Month'] == asset['date'])) {
-            desiredLoanSummary = loanSummary;
+        if ((loanSummary['Property Address'] == asset['address'])) {
+            if((loanSummary['Month'] == asset['date'])){
+                return loanSummary;
+            } else {
+                isThereProblemDate = true;
+            }
         }
+    }
+    if(!isThereProblemDate){
+        return invalidAddress;
+    }else{
+        return invalidDate;
     }
     return desiredLoanSummary;
 };
